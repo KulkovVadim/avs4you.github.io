@@ -1,0 +1,8 @@
+**/.qtcreator
+**/.vs
+
+**/Release
+**/Debug
+**/x64
+*.vcxproj.user
+*.bak
