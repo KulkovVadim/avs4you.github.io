@@ -80,6 +80,7 @@ extern "C" {
         {
         case AVS_VIDEO_CONVERTER:
         case AVS_VIDEO_EDITOR:
+        case AVS_IMAGE_CONVERTER:
             return true;
         default:break;
         }
