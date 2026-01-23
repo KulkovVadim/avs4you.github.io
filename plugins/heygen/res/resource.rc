@@ -1,0 +1,56 @@
+#include <windows.h>
+#include "../src/resource.h"
+
+IDI_MAINICON      ICON  DISCARDABLE "./icons/app-icon.ico"
+IDI_CHEVRON       RCDATA  "./icons/chevron-down.emf"
+IDI_CHEVRONDARK   RCDATA  "./icons/chevron-down_dark.emf"
+IDI_AVATAR        RCDATA  "./icons/avatar.emf"
+IDI_AVATARDARK    RCDATA  "./icons/avatar_dark.emf"
+IDI_VOICE         RCDATA  "./icons/voice.emf"
+IDI_VOICEDARK     RCDATA  "./icons/voice_dark.emf"
+IDI_OPTIONS       RCDATA  "./icons/options.emf"
+IDI_OPTIONSDARK   RCDATA  "./icons/options_dark.emf"
+IDI_SPEECH        RCDATA  "./icons/speech.emf"
+IDI_SPEECHDARK    RCDATA  "./icons/speech_dark.emf"
+IDI_PREVIEW       RCDATA  "./icons/preview.emf"
+IDI_PREVIEWDARK   RCDATA  "./icons/preview_dark.emf"
+IDI_ABOUT         RCDATA  "./icons/about.emf"
+IDI_ABOUTDARK     RCDATA  "./icons/about_dark.emf"
+IDI_CONFIG        RCDATA  "./icons/config.emf"
+IDI_CONFIGDARK    RCDATA  "./icons/config_dark.emf"
+IDT_THEMES        TEXT    "./styles/themes.xml"
+IDT_STYLES        TEXT    "./styles/styles.xml"
+IDT_JSON_SETTINGS   TEXT   "settings.json"
+IDT_TRANSLATION     RCDATA "./langs/langs.bin"
+
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "./manifest/Heygen.dll.manifest"
+
+#include "../src/version.h"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION     VER_FILEVERSION
+PRODUCTVERSION  VER_PRODUCTVERSION
+// FILETYPE        VFT_DLL
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK VER_LANG_AND_CHARSET_STR
+        BEGIN
+            VALUE "CompanyName",        VER_COMPANYNAME_STR
+            VALUE "FileDescription",    VER_FILEDESCRIPTION_STR
+            VALUE "FileVersion",        VER_FILEVERSION_STR
+            VALUE "InternalName",       VER_INTERNALNAME_STR
+            VALUE "LegalCopyright",     VER_LEGALCOPYRIGHT_STR
+            VALUE "LegalTrademarks1",   VER_LEGALTRADEMARKS1_STR
+            VALUE "LegalTrademarks2",   VER_LEGALTRADEMARKS2_STR
+            VALUE "OriginalFilename",   VER_ORIGINALFILENAME_STR
+            VALUE "ProductName",        VER_PRODUCTNAME_STR
+            VALUE "ProductVersion",     VER_PRODUCTVERSION_STR
+        END
+    END
+
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", VER_LANG_ID, VER_CHARSET_ID
+    END
+END
