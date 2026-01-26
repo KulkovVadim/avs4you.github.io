@@ -610,6 +610,22 @@ void MainWindow::onRequestComplete(int error, std::wstring str, int act)
                 ui->btnRefresh->setDisabled(false);
             } else
                 m_intf->refresh_status = 1;
+
+            if (error != 200) {
+                std::wstring err = L"onRequestComplete ACTION_GET_AVATARS: error code " + std::to_wstring(error);
+                nlohmann::json json_obj = nlohmann::json::parse(utils::wstr_to_utf8(str), nullptr, false);
+                if ( !json_obj["error"].is_null() ) {
+                    nlohmann::json json_err =  json_obj["error"];
+                    if ( !json_err["message"].is_null() ) {
+                        err = utils::utf8_to_wstr(json_err["message"]);
+                    }
+                }
+                if (err == L"Unauthorized")
+                    CCore::getInstance().resetApiKey();
+
+                showMessage(_T("Heygen"), err, {UIPopupMessage::Ok});
+            }
+
         } else
         if ( act == ACTION_GET_VOICES ) {
             m_intf->on_query_voices_complete(error, str);
@@ -644,6 +660,9 @@ void MainWindow::onRequestComplete(int error, std::wstring str, int act)
                         err = utils::utf8_to_wstr(json_err["message"]);
                     }
                 }
+                if (err == L"Unauthorized")
+                    CCore::getInstance().resetApiKey();
+
                 LOGW(err.c_str());
                 showMessage(_T("Heygen"), err, {UIPopupMessage::Ok});
             }
