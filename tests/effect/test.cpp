@@ -2,6 +2,7 @@
 #include <gdiplus.h>
 #include <iostream>
 #include <string>
+#include <chrono>
 
 #include "../../sdk/include/CEffectPluginIntf.h"
 
@@ -80,18 +81,34 @@ bool makeIteration(const std::wstring& inputPath, const double& completness, LPA
     return true;
 }
 
+std::wstring GetExecutableDirectory() 
+{
+    wchar_t buffer[MAX_PATH];
+    GetModuleFileNameW(NULL, buffer, MAX_PATH);
+     
+    std::wstring exePath(buffer);
+    size_t pos = exePath.find_last_of(L"\\/");
+
+    if (pos != std::string::npos)
+        return exePath.substr(0, pos);
+
+    return exePath;
+}
+
 int main(int argc, char* argv[])
 {
     std::wstring inputPath = L"PATH_TO_IMAGE";
 
-    std::wstring dllPath = L"../../plugins/effect-vhs/Release/vhs.dll";
+    std::wstring dllPath = L"..\\..\\..\\plugins\\effect-vhs\\Debug\\vhs.dll";
 #ifdef _WIN64
-    dllPath = L"../../plugins/effect-vhs/x64/Release/vhs.dll";
+    dllPath = L"..\\..\\..\\..\\plugins\\effect-vhs\\x64\\Release\\vhs.dll";
 #endif
 
-    HMODULE hDLL = LoadLibraryW(dllPath.c_str());
+    dllPath = GetExecutableDirectory() + L"\\" + dllPath;
+    HMODULE hDLL = LoadLibraryExW(dllPath.c_str(), NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
     if (!hDLL)
     {
+        DWORD dwError = GetLastError();
         std::cout << "Cannot load DLL" << std::endl;
         return -1;
     }
@@ -108,6 +125,8 @@ int main(int argc, char* argv[])
     ULONG_PTR gdiplusToken;
 
     GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
+
+    auto start = std::chrono::high_resolution_clock::now();
 
     void* effectData = NULL;
     makeIteration(inputPath, 0.1, ApplyEffect, &effectData);
@@ -127,7 +146,12 @@ int main(int argc, char* argv[])
         if (ReleaseData)
             ReleaseData(effectData);
     }
-        
+
+    auto end = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    std::cout << "time: " << duration.count() << " ms" << std::endl;
+
     FreeLibrary(hDLL);
     GdiplusShutdown(gdiplusToken);
 
