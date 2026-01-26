@@ -18,8 +18,9 @@ else()
 endif()
 
 add_definitions(-DVISUALUI_STATIC -DPLUGIN_EXPORTS)
-set(COMMON_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../common)
-set(3DPARTY_ROOT ${COMMON_ROOT}/3dparty)
+set(SDK_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../sdk)
+set(COMMON_ROOT ${SDK_ROOT}/common)
+set(3DPARTY_ROOT ${SDK_ROOT}/3dParty)
 set(STATIC_ARCH_DIR "${TARGET_ARCH}-windows-static")
 
 set(3DPARTY_STATIC_ROOT "${3DPARTY_ROOT}/${STATIC_ARCH_DIR}")
@@ -70,16 +71,16 @@ set(HEADERS
 )
 
 set(EXTERNAL_SOURCES
-    ${COMMON_ROOT}/src/ActivationContext.cpp
-    ${COMMON_ROOT}/src/CHttpClient.cpp
-    ${COMMON_ROOT}/src/CIconExtractor.cpp
+    ${COMMON_ROOT}/ActivationContext.cpp
+    ${COMMON_ROOT}/CHttpClient.cpp
+    ${COMMON_ROOT}/CIconExtractor.cpp
 )
 
 set(EXTERNAL_HEADERS
-    ${COMMON_ROOT}/src/ActivationContext.h
-    ${COMMON_ROOT}/src/CHttpClient.h
-    ${COMMON_ROOT}/src/HttpStatusCodes.h
-    ${COMMON_ROOT}/src/CIconExtractor.h
+    ${COMMON_ROOT}/ActivationContext.h
+    ${COMMON_ROOT}/CHttpClient.h
+    ${COMMON_ROOT}/HttpStatusCodes.h
+    ${COMMON_ROOT}/CIconExtractor.h
     ${3DPARTY_ROOT}/nlohmann/json/single_include/nlohmann/json.hpp
 )
 
@@ -95,8 +96,8 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS} ${EXTERNAL_SOURCES} ${E
 target_compile_definitions(${PROJECT_NAME} PRIVATE VISUALUI_LIBRARY)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-    ${COMMON_ROOT}/src
-    ${COMMON_ROOT}/include
+    ${COMMON_ROOT}
+    ${SDK_ROOT}/include
     ${3DPARTY_ROOT}/nlohmann/json/single_include
     ${VISUALUI_INCLUDE_DIR}
     ${VISUALUI_INCLUDE_DIR}/core
