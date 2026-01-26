@@ -140,11 +140,8 @@ std::wstring CHeygenPlugin::GetIconById(int id) const
     auto _icon_resource_to_file = [=](int resid, const std::wstring& path) -> bool {
     	// check directory exist and create it if not
         HMODULE hInst = utils::getCurrentModule();
-        std::wstring directory;
-		const size_t last_slash_idx = path.rfind('\\');
-		if ( std::string::npos != last_slash_idx ) {
-        	directory = path.substr(0, last_slash_idx);
-
+        std::wstring directory = UIFileSystem::parentPath(path);
+        if ( !directory.empty() ) {
             if ( !UIFileSystem::dirExists(directory) ) {
                 if ( !UIFileSystem::makePath(directory) )
                 	return false;
