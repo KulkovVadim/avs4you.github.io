@@ -33,7 +33,7 @@ public:
 	std::vector<CVoice *> voices() const;
 	void keepAvatars(const nlohmann::json&);
 	void keepVoices(const nlohmann::json&);
-
+    void resetApiKey();
 	bool checkApiKey();
 	CUserSettings& userSettings();
 
