@@ -225,6 +225,12 @@ void CCore::keepVoices(const nlohmann::json& jv)
 	m_intf->keep_voices(jv);
 }
 
+void CCore::resetApiKey()
+{
+    m_intf->m_api_key = L"";
+    m_intf->user_settings->keepApiKey(L"");
+}
+
 bool CCore::checkApiKey()
 {
     if ( m_intf->m_api_key.empty() ) {

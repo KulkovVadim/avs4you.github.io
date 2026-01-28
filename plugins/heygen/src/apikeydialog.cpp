@@ -10,6 +10,7 @@ ApiKeyDialog::ApiKeyDialog(UIWidget *parent, const Rect &rc) :
     setWindowTitle(_TR(ADD_KEY_CAPTION));
     ui->setupUi(this);
 
+    ui->editKey->setPlaceholderText(_T("Enter the API key"));
     // ui->editKey->setText(_T("YjgxNjAxNmI0Yjg0NDEwYjkzMjUzYmM0N2U2MjY0N2MtMTc1MzI5NjQyNQ=="));
 
     ui->btnOk->clickSignal.connect([this]() {
