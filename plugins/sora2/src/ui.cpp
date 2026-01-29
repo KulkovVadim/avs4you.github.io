@@ -586,7 +586,10 @@ namespace NSUI
 		AdjustWindowRectEx(&rc, dwStyle, FALSE, 0);
 
 		HWND hwnd = CreateWindowEx(0, className, titleWindow.c_str(), dwStyle, CW_USEDEFAULT, CW_USEDEFAULT,
-		                           rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, GetModuleHandle(NULL), plugin);
+		                           rc.right - rc.left, rc.bottom - rc.top, plugin->m_hParentWindow, NULL, GetModuleHandle(NULL), plugin);
+
+		if (plugin->m_hParentWindow)
+			EnableWindow(plugin->m_hParentWindow, FALSE);
 
 		CenterWindow(hwnd);
 		ShowWindow(hwnd, SW_SHOW);
@@ -608,6 +611,12 @@ namespace NSUI
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
+		}
+
+		if (plugin->m_hParentWindow)
+		{
+			EnableWindow(plugin->m_hParentWindow, TRUE);
+			SetForegroundWindow(plugin->m_hParentWindow);
 		}
 
 		if (hActCtx != INVALID_HANDLE_VALUE)
