@@ -484,6 +484,10 @@ namespace NSUI
 									plugin->m_engine.FakeStart();
 									AVS::ProgressBar_SetPos(hProgress, (int)plugin->m_engine.GetFakeProgress());
 								}
+								else
+								{
+									AVS::ProgressBar_SetPos(hProgress, progress);
+								}
 
 								AVS::Label_SetTextAndColor(hStatus, NSStringUtils::utf8_to_wstring("ID: " + id), colorText);
 							}
