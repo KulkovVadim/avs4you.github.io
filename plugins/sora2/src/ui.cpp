@@ -222,7 +222,7 @@ namespace NSUI
 		{
 		case WM_CREATE:
 		{
-			int SettingsButtonsW = 80;
+			int SettingsButtonsW = 100;
 			int WindowW = 500;
 
 			// prompt edit
@@ -265,7 +265,7 @@ namespace NSUI
 				{ L"1280x720" });
 			top += (distance + 25);
 
-			HWND hDurationLabel = AVS::CreateLabel(hwnd, hInstance, tr->Translate(L"Duration").c_str(),
+			HWND hDurationLabel = AVS::CreateLabel(hwnd, hInstance, tr->Translate(L"Duration (s)").c_str(),
 				left, top, SettingsButtonsW, 25, AVS::LabelSettings::Create(AVS::LabelType::Disabled));
 			top += labelH;
 
@@ -585,11 +585,15 @@ namespace NSUI
 		RECT rc = {0, 0, 500, 310};
 		AdjustWindowRectEx(&rc, dwStyle, FALSE, 0);
 
-		HWND hwnd = CreateWindowEx(0, className, titleWindow.c_str(), dwStyle, CW_USEDEFAULT, CW_USEDEFAULT,
-		                           rc.right - rc.left, rc.bottom - rc.top, plugin->m_hParentWindow, NULL, GetModuleHandle(NULL), plugin);
+		DWORD dwExStyle = WS_EX_APPWINDOW; // 0
+		HWND hwnd = CreateWindowEx(dwExStyle, className, titleWindow.c_str(), dwStyle, CW_USEDEFAULT, CW_USEDEFAULT,
+			rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, GetModuleHandle(NULL), plugin);
 
 		if (plugin->m_hParentWindow)
+		{
+			SetWindowLongPtr(hwnd, GWLP_HWNDPARENT, (LONG_PTR)plugin->m_hParentWindow);
 			EnableWindow(plugin->m_hParentWindow, FALSE);
+		}
 
 		CenterWindow(hwnd);
 		ShowWindow(hwnd, SW_SHOW);
