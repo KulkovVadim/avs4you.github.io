@@ -1,0 +1,14 @@
+EXPORTS
+PluginType
+IsApplicationSupported
+ApplyEffect
+ReleasePluginString
+ReleaseEffectData
+PluginId
+PluginName
+PluginVersion
+PluginIcon
+GetEffectsCount
+GetEffectId
+GetEffectName
+GetEffectParams

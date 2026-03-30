@@ -1,0 +1,5 @@
+**/packages
+**/onnxruntime
+*.vcxproj.user
+**/Debug
+**/Release
